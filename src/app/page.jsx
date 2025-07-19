@@ -5,6 +5,7 @@ import Link from 'next/link'
 export default function Home() {
   return (
     <div className="min-h-screen bg-white">
+        
       {/* Hero Section */}
       <HeroSection />
       
@@ -39,13 +40,13 @@ function HeroSection() {
             
 
           {/* Text + Button - takes remaining space */}
-          <div className="grid grid-rows-[1fr_auto]  h-36 gap-2">
+          <div className="grid grid-rows-[1fr_auto] h-36 gap-2">
             {/* Heading - takes most space */}
             <div className="flex ">
               
-              <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 leading-tight">
+              <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 leading-tight font-outfit">
                 Find the Career that fits you 
-                <span className="block">Perfectly</span>
+                <span className="block font-outfit">Perfectly</span>
               </h1>
             </div>
             {/* Button - auto height */}
@@ -74,7 +75,7 @@ function HeroSection() {
         
         {/* Bottom section: Description */}
         <div className="space-y-6">
-          <p className="text-lg text-gray-600">
+          <p className="text-lg text-gray-600 font-outfit">
             Take the SkillSetGo Test and find the stream, degree, or career that's the right fit—for you.
           </p>
         </div>
@@ -83,14 +84,16 @@ function HeroSection() {
 
       {/* Desktop Layout - Original grid */}
       <div className="hidden lg:flex  gap-0 justify-center items-center">
+
         {/* Left Content */}
-        <div className=" space-y-6  mx-20 flex-col ">
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 leading-tight">
+        <div className=" space-y-6 mx-20 flex-col ">
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 leading-tight font-outfit">
             Find the Career 
-            <span className="block">that fits you Perfectly</span>
+            <span className="block font-outfit">that fits you Perfectly</span>
+            
           </h1>
-          
-          <p className="text-lg text-gray-600 max-w-lg">
+                    
+          <p className="text-lg text-gray-600 max-w-lg font-outfit">
             Take the SkillSetGo Test and find the stream, degree, or career that's the right fit—for you.
           </p>
           
@@ -114,15 +117,14 @@ function HeroSection() {
   )
 }
 
-// Yellow Banner Component
 function YellowBanner() {
   return (
     <section className="bg-[#D4B429] py-6">
       <div className="max-w-7xl mx-auto px-4 text-center">
-        <h2 className="text-xl md:text-2xl font-bold text-black">
+        <h2 className="text-xl md:text-2xl font-bold text-black font-outfit">
           Transforming Futures with Purposeful Career Guidance
         </h2>
-        <p className="text-black mt-2">
+        <p className="text-black mt-2 font-outfit">
           Smart career support for students and schools — clear, simple, and effective
         </p>
       </div>
@@ -130,7 +132,6 @@ function YellowBanner() {
   )
 }
 
-// Four Cards Section Component
 function FourCardsSection() {
   const cards = [
     {
@@ -178,12 +179,12 @@ function FourCardsSection() {
             </div>
             
             {/* Title */}
-            <h3 className="text-xl font-bold text-gray-900 leading-tight">
+            <h3 className="text-xl font-bold text-gray-900 leading-tight font-outfit">
               {card.title}
             </h3>
             
             {/* Description */}
-            <p className="text-gray-600 text-base leading-relaxed">
+            <p className="text-gray-600 text-base leading-relaxed font-outfit">
               {card.description}
             </p>
           </div>
@@ -211,12 +212,12 @@ function FourCardsSection() {
             </div>
             
             {/* Title */}
-            <h3 className="text-2xl font-bold text-gray-900 leading-tight">
+            <h3 className="text-2xl font-bold text-gray-900 leading-tight font-outfit">
               {card.title}
             </h3>
             
             {/* Description */}
-            <p className="text-gray-600 text-lg leading-relaxed max-w-md mx-auto">
+            <p className="text-gray-600 text-lg leading-relaxed max-w-md mx-auto font-outfit">
               {card.description}
             </p>
           </div>
@@ -226,15 +227,14 @@ function FourCardsSection() {
   )
 }
 
-// Programs Banner Component (New)
 function ProgramsBanner() {
   return (
     <section className="bg-[#D4B429] py-6">
       <div className="max-w-7xl mx-auto px-4 text-center">
-        <h2 className="text-3xl md:text-4xl font-bold text-black mb-2">
+        <h2 className="text-3xl md:text-4xl font-bold text-black mb-2 font-outfit">
           Our Programs
         </h2>
-        <p className="text-black text-lg">
+        <p className="text-black text-lg font-outfit">
           Career guidance made simple — for students, parents, and schools
         </p>
       </div>
@@ -242,7 +242,6 @@ function ProgramsBanner() {
   )
 }
 
-// Programs Section Component (Updated)
 function ProgramsSection() {
   const programs = [
     {
@@ -320,20 +319,15 @@ function ProgramsSection() {
         <div className="lg:hidden">
           {/* For Students Header - White Background */}
           <div className="text-center mb-8">
-            <h3 className="text-2xl font-bold text-[#942705]">For Students</h3>
+            <h3 className="text-2xl font-bold text-[#942705] font-outfit">For Students</h3>
           </div>
           
           {/* Student Programs with Alternating Backgrounds */}
           <div className="space-y-8 mb-12">
             {programs.slice(0, 3).map((program, index) => (
-              <div 
-                key={index} 
-                className={` p-6 text-center space-y-4 ${
-                  index % 2 === 0 ? 'bg-[#FFF8E8]' : 'bg-white'
-                }`}
-              >
+              <div key={index} className={`p-6 text-center space-y-4 ${index % 2 === 0 ? 'bg-[#FFF8E8]' : 'bg-white'}`}>
                 {/* Title in green */}
-                <h4 className="text-2xl font-bold text-[#6B8E23]">{program.title}</h4>
+                <h4 className="text-2xl font-bold text-[#6B8E23] font-outfit">{program.title}</h4>
                 
                 {/* Icon - Increased Size */}
                 <div className="flex justify-center">
@@ -349,14 +343,14 @@ function ProgramsSection() {
                 </div>
                 
                 {/* Subtitle */}
-                <h5 className="text-xl font-bold text-black">{program.subtitle}</h5>
+                <h5 className="text-xl font-bold text-black font-outfit">{program.subtitle}</h5>
                 
                 {/* Description - Increased font size */}
-                <p className="text-black text-lg">{program.description}</p> {/* Changed from text-base to text-lg */}
+                <p className="text-black text-lg font-outfit">{program.description}</p> {/* Changed from text-base to text-lg */}
                 
                 {/* Highlights */}
                 <div className="text-left">
-                  <p className="font-bold text-black mb-2">Highlights:</p>
+                  <p className="font-bold text-black mb-2 font-outfit">Highlights:</p>
                   <ul className="space-y-1">
                     {program.highlights.map((highlight, idx) => (
                       <li key={idx} className="text-black text-base font-light flex items-start">
@@ -372,20 +366,15 @@ function ProgramsSection() {
 
           {/* For Institutions Header - White Background */}
           <div className="text-center mb-8">
-            <h3 className="text-2xl font-bold text-[#942705]">For Institutions</h3>
+            <h3 className="text-2xl font-bold text-[#942705] font-outfit">For Institutions</h3>
           </div>
           
           {/* Institution Programs with Alternating Backgrounds */}
           <div className="space-y-8">
             {programs.slice(3).map((program, index) => (
-              <div 
-                key={index + 3} 
-                className={`rounded-lg p-6 text-center space-y-4 ${
-                  index % 2 === 0 ? 'bg-[#FFF8E8]' : 'bg-white'
-                }`}
-              >
+              <div key={index + 3} className={`rounded-lg p-6 text-center space-y-4 ${index % 2 === 0 ? 'bg-[#FFF8E8]' : 'bg-white'}`}>
                 {/* Same content structure as above */}
-                <h4 className="text-2xl font-bold text-[#6B8E23]">{program.title}</h4>
+                <h4 className="text-2xl font-bold text-[#6B8E23] font-outfit">{program.title}</h4>
                 
                 {/* Icon - Increased Size */}
                 <div className="flex justify-center">
@@ -400,13 +389,13 @@ function ProgramsSection() {
                   />
                 </div>
                 
-                <h5 className="text-xl font-bold text-black">{program.subtitle}</h5>
+                <h5 className="text-xl font-bold text-black font-outfit">{program.subtitle}</h5>
                 
                 {/* Description - Increased font size */}
-                <p className="text-black text-lg">{program.description}</p> {/* Changed from text-base to text-lg */}
+                <p className="text-black text-lg font-outfit">{program.description}</p> {/* Changed from text-base to text-lg */}
                 
                 <div className="text-left">
-                  <p className="font-bold text-black mb-2">Highlights:</p>
+                  <p className="font-bold text-black mb-2 font-outfit">Highlights:</p>
                   <ul className="space-y-1">
                     {program.highlights.map((highlight, idx) => (
                       <li key={idx} className="text-black text-base font-light flex items-start">
@@ -425,29 +414,24 @@ function ProgramsSection() {
         <div className="hidden lg:block">
           {/* For Students Header - White Background */}
           <div className="text-center mb-12">
-            <h3 className="text-3xl font-bold text-red-700">For Students</h3>
+            <h3 className="text-3xl font-bold text-red-700 font-outfit">For Students</h3>
           </div>
           
           {/* Student Programs with Alternating Backgrounds */}
           <div className="space-y-8 mb-16">
             {programs.slice(0, 3).map((program, index) => (
-              <div 
-                key={index} 
-                className={`p-12 ${
-                  index % 2 === 0 ? 'bg-[#FFF8E8]' : 'bg-white'
-                }`}
-              >
+              <div key={index} className={`p-12 ${index % 2 === 0 ? 'bg-[#FFF8E8]' : 'bg-white'}`}>
                 <div className="flex items-center gap-12">
                   {/* Left: Content */}
                   <div className="flex-1 space-y-4">
-                    <h4 className="text-3xl font-bold text-[#6B8E23]">{program.title}</h4>
-                    <h5 className="text-xl font-bold text-black">{program.subtitle}</h5>
+                    <h4 className="text-3xl font-bold text-[#6B8E23] font-outfit">{program.title}</h4>
+                    <h5 className="text-xl font-bold text-black font-outfit">{program.subtitle}</h5>
                     
                     {/* Description - Increased font size */}
-                    <p className="text-black text-xl">{program.description}</p> {/* Changed from text-lg to text-xl */}
+                    <p className="text-black text-xl font-outfit">{program.description}</p> {/* Changed from text-lg to text-xl */}
                     
                     <div>
-                      <p className="font-bold text-black mb-3 text-lg">Highlights:</p>
+                      <p className="font-bold text-black mb-3 text-lg font-outfit">Highlights:</p>
                       <ul className="space-y-2">
                         {program.highlights.map((highlight, idx) => (
                           <li key={idx} className="text-black text-lg font-light flex items-start">
@@ -478,29 +462,24 @@ function ProgramsSection() {
 
           {/* For Institutions Header - White Background */}
           <div className="text-center mb-12">
-            <h3 className="text-3xl font-bold text-red-700">For Institutions</h3>
+            <h3 className="text-3xl font-bold text-red-700 font-outfit">For Institutions</h3>
           </div>
           
           {/* Institution Programs with Alternating Backgrounds */}
           <div className="space-y-8">
             {programs.slice(3).map((program, index) => (
-              <div 
-                key={index + 3} 
-                className={`p-12 ${
-                  index % 2 === 0 ? 'bg-[#FFF8E8]' : 'bg-white'
-                }`}
-              >
+              <div key={index + 3} className={`p-12 ${index % 2 === 0 ? 'bg-[#FFF8E8]' : 'bg-white'}`}>
                 <div className="flex items-center gap-12">
                   {/* Same content structure as above */}
                   <div className="flex-1 space-y-4">
-                    <h4 className="text-3xl font-bold text-[#6B8E23]">{program.title}</h4>
-                    <h5 className="text-xl font-bold text-black">{program.subtitle}</h5>
+                    <h4 className="text-3xl font-bold text-[#6B8E23] font-outfit">{program.title}</h4>
+                    <h5 className="text-xl font-bold text-black font-outfit">{program.subtitle}</h5>
                     
                     {/* Description - Increased font size */}
-                    <p className="text-black text-xl">{program.description}</p> {/* Changed from text-lg to text-xl */}
+                    <p className="text-black text-xl font-outfit">{program.description}</p> {/* Changed from text-lg to text-xl */}
                     
                     <div>
-                      <p className="font-bold text-black mb-3 text-lg">Highlights:</p>
+                      <p className="font-bold text-black mb-3 text-lg font-outfit">Highlights:</p>
                       <ul className="space-y-2">
                         {program.highlights.map((highlight, idx) => (
                           <li key={idx} className="text-black text-lg font-light flex items-start">

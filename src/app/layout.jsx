@@ -1,10 +1,18 @@
-import "./styles/globals.css";
-import { Outfit, Inter } from 'next/font/google'
+import "./globals.css";
+import { Outfit, Inter } from "next/font/google";
 import Navbar from "@/components/layout/Navbar";
-import Footer from "@/components/layout/Footer"; // Add this
+import Footer from "@/components/layout/Footer";
 
-const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
-const outfit = Outfit({ subsets: ['latin'], variable: '--font-outfit' });
+// Initialize both fonts
+const InterSans = Inter({
+  variable: "--font-inter-sans",
+  subsets: ["latin"],
+});
+
+const OutfitMono = Outfit({
+  variable: "--font-outfit-mono",
+  subsets: ["latin"],
+});
 
 export const metadata = {
   title: "SkillsetGo",
@@ -13,8 +21,9 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className={`${inter.variable} ${outfit.variable}`}>
-      <body className="font-sans">
+    // Ensure BOTH variables are included in the className here
+    <html lang="en" className={`${InterSans.variable} ${OutfitMono.variable} antialiased`}>
+      <body>
         <Navbar />
         <main>
           {children}
@@ -22,5 +31,5 @@ export default function RootLayout({ children }) {
         <Footer />
       </body>
     </html>
-  )
+  );
 }

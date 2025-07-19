@@ -2,7 +2,7 @@ import Link from 'next/link'
 
 export default function Footer() {
   return (
-    <footer className="bg-[#6B8E23] text-white font-inter">
+    <footer className="bg-[#6B8B23] text-white font-inter">
       {/* Mobile Layout */}
       <div className="lg:hidden px-6 py-6">
         {/* Side by side layout for mobile */}
