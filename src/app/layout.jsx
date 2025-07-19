@@ -3,17 +3,8 @@ import { Outfit, Inter } from 'next/font/google'
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer"; // Add this
 
-const outfit = Outfit({
-  subsets: ['latin'],
-  display: 'swap',
-  variable: '--font-outfit'
-})
-
-const inter = Inter({
-  subsets: ['latin'],
-  display: 'swap',
-  variable: '--font-inter'
-})
+const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
+const outfit = Outfit({ subsets: ['latin'], variable: '--font-outfit' });
 
 export const metadata = {
   title: "SkillsetGo",

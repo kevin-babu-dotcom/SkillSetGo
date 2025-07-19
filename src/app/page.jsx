@@ -1,6 +1,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 
+
 export default function Home() {
   return (
     <div className="min-h-screen bg-white">
@@ -28,7 +29,7 @@ export default function Home() {
 // Hero Section Component
 function HeroSection() {
   return (
-    <section className="max-w-7xl mx-auto px-4 py-12 font-outfit lg:py-20 xl:py-24">
+    <section className="max-w-7xl mx-auto px-4 py-12 lg:py-20 xl:py-24 font-outfit">
       {/* Mobile Layout - Using Grid */}
       <div className="lg:hidden space-y-5">
         {/* Top section: Grid layout */}
@@ -41,7 +42,8 @@ function HeroSection() {
           <div className="grid grid-rows-[1fr_auto]  h-36 gap-2">
             {/* Heading - takes most space */}
             <div className="flex ">
-              <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 leading-tight font-outfit">
+              
+              <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 leading-tight">
                 Find the Career that fits you 
                 <span className="block">Perfectly</span>
               </h1>
@@ -83,7 +85,7 @@ function HeroSection() {
       <div className="hidden lg:flex  gap-0 justify-center items-center">
         {/* Left Content */}
         <div className=" space-y-6  mx-20 flex-col ">
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 leading-tight font-outfit">
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 leading-tight">
             Find the Career 
             <span className="block">that fits you Perfectly</span>
           </h1>
@@ -91,6 +93,7 @@ function HeroSection() {
           <p className="text-lg text-gray-600 max-w-lg">
             Take the SkillSetGo Test and find the stream, degree, or career that's the right fit—for you.
           </p>
+          
         </div>
         
         {/* Right Content - Illustration */}
@@ -116,7 +119,7 @@ function YellowBanner() {
   return (
     <section className="bg-[#D4B429] py-6">
       <div className="max-w-7xl mx-auto px-4 text-center">
-        <h2 className="text-xl md:text-2xl font-bold text-black font-outfit">
+        <h2 className="text-xl md:text-2xl font-bold text-black">
           Transforming Futures with Purposeful Career Guidance
         </h2>
         <p className="text-black mt-2">
@@ -175,7 +178,7 @@ function FourCardsSection() {
             </div>
             
             {/* Title */}
-            <h3 className="text-xl font-bold text-gray-900 leading-tight font-outfit">
+            <h3 className="text-xl font-bold text-gray-900 leading-tight">
               {card.title}
             </h3>
             
@@ -208,7 +211,7 @@ function FourCardsSection() {
             </div>
             
             {/* Title */}
-            <h3 className="text-2xl font-bold text-gray-900 leading-tight font-outfit">
+            <h3 className="text-2xl font-bold text-gray-900 leading-tight">
               {card.title}
             </h3>
             
@@ -228,7 +231,7 @@ function ProgramsBanner() {
   return (
     <section className="bg-[#D4B429] py-6">
       <div className="max-w-7xl mx-auto px-4 text-center">
-        <h2 className="text-3xl md:text-4xl font-bold text-black mb-2 font-outfit">
+        <h2 className="text-3xl md:text-4xl font-bold text-black mb-2">
           Our Programs
         </h2>
         <p className="text-black text-lg">
@@ -311,13 +314,13 @@ function ProgramsSection() {
   ]
 
   return (
-    <section className="py-12 bg-white font-inter">
+    <section className="py-12 bg-white">
       <div className="max-w-7xl mx-auto lg:px-4 px-0">
         {/* Mobile Layout */}
         <div className="lg:hidden">
           {/* For Students Header - White Background */}
           <div className="text-center mb-8">
-            <h3 className="text-2xl font-bold text-[#942705] font-outfit">For Students</h3>
+            <h3 className="text-2xl font-bold text-[#942705]">For Students</h3>
           </div>
           
           {/* Student Programs with Alternating Backgrounds */}
@@ -330,7 +333,7 @@ function ProgramsSection() {
                 }`}
               >
                 {/* Title in green */}
-                <h4 className="text-2xl font-bold text-[#6B8E23] font-outfit">{program.title}</h4>
+                <h4 className="text-2xl font-bold text-[#6B8E23]">{program.title}</h4>
                 
                 {/* Icon - Increased Size */}
                 <div className="flex justify-center">
@@ -346,7 +349,7 @@ function ProgramsSection() {
                 </div>
                 
                 {/* Subtitle */}
-                <h5 className="text-xl font-bold text-black font-outfit">{program.subtitle}</h5>
+                <h5 className="text-xl font-bold text-black">{program.subtitle}</h5>
                 
                 {/* Description - Increased font size */}
                 <p className="text-black text-lg">{program.description}</p> {/* Changed from text-base to text-lg */}
@@ -369,7 +372,7 @@ function ProgramsSection() {
 
           {/* For Institutions Header - White Background */}
           <div className="text-center mb-8">
-            <h3 className="text-2xl font-bold text-[#942705] font-outfit">For Institutions</h3>
+            <h3 className="text-2xl font-bold text-[#942705]">For Institutions</h3>
           </div>
           
           {/* Institution Programs with Alternating Backgrounds */}
@@ -382,7 +385,7 @@ function ProgramsSection() {
                 }`}
               >
                 {/* Same content structure as above */}
-                <h4 className="text-2xl font-bold text-[#6B8E23] font-outfit">{program.title}</h4>
+                <h4 className="text-2xl font-bold text-[#6B8E23]">{program.title}</h4>
                 
                 {/* Icon - Increased Size */}
                 <div className="flex justify-center">
@@ -397,7 +400,7 @@ function ProgramsSection() {
                   />
                 </div>
                 
-                <h5 className="text-xl font-bold text-black font-outfit">{program.subtitle}</h5>
+                <h5 className="text-xl font-bold text-black">{program.subtitle}</h5>
                 
                 {/* Description - Increased font size */}
                 <p className="text-black text-lg">{program.description}</p> {/* Changed from text-base to text-lg */}
@@ -422,7 +425,7 @@ function ProgramsSection() {
         <div className="hidden lg:block">
           {/* For Students Header - White Background */}
           <div className="text-center mb-12">
-            <h3 className="text-3xl font-bold text-red-700 font-outfit">For Students</h3>
+            <h3 className="text-3xl font-bold text-red-700">For Students</h3>
           </div>
           
           {/* Student Programs with Alternating Backgrounds */}
@@ -437,8 +440,8 @@ function ProgramsSection() {
                 <div className="flex items-center gap-12">
                   {/* Left: Content */}
                   <div className="flex-1 space-y-4">
-                    <h4 className="text-3xl font-bold text-[#6B8E23] font-outfit">{program.title}</h4>
-                    <h5 className="text-xl font-bold text-black font-outfit">{program.subtitle}</h5>
+                    <h4 className="text-3xl font-bold text-[#6B8E23]">{program.title}</h4>
+                    <h5 className="text-xl font-bold text-black">{program.subtitle}</h5>
                     
                     {/* Description - Increased font size */}
                     <p className="text-black text-xl">{program.description}</p> {/* Changed from text-lg to text-xl */}
@@ -475,7 +478,7 @@ function ProgramsSection() {
 
           {/* For Institutions Header - White Background */}
           <div className="text-center mb-12">
-            <h3 className="text-3xl font-bold text-red-700 font-outfit">For Institutions</h3>
+            <h3 className="text-3xl font-bold text-red-700">For Institutions</h3>
           </div>
           
           {/* Institution Programs with Alternating Backgrounds */}
@@ -490,8 +493,8 @@ function ProgramsSection() {
                 <div className="flex items-center gap-12">
                   {/* Same content structure as above */}
                   <div className="flex-1 space-y-4">
-                    <h4 className="text-3xl font-bold text-[#6B8E23] font-outfit">{program.title}</h4>
-                    <h5 className="text-xl font-bold text-black font-outfit">{program.subtitle}</h5>
+                    <h4 className="text-3xl font-bold text-[#6B8E23]">{program.title}</h4>
+                    <h5 className="text-xl font-bold text-black">{program.subtitle}</h5>
                     
                     {/* Description - Increased font size */}
                     <p className="text-black text-xl">{program.description}</p> {/* Changed from text-lg to text-xl */}
