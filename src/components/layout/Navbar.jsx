@@ -11,7 +11,7 @@ setIsMenuOpen(!isMenuOpen)
 }
 
 return (
-<nav className="bg-white shadow-sm border-b">
+<nav className="bg-white shadow-sm border-b font-outfit">
 <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
 <div className="flex justify-between items-center h-16">
     
