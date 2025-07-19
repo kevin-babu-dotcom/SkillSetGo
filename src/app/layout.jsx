@@ -1,6 +1,7 @@
 import "./styles/globals.css";
 import { Outfit, Inter } from 'next/font/google'
 import Navbar from "@/components/layout/Navbar";
+import Footer from "@/components/layout/Footer"; // Add this
 
 const outfit = Outfit({
   subsets: ['latin'],
@@ -16,7 +17,7 @@ const inter = Inter({
 
 export const metadata = {
   title: "SkillsetGo",
-  description: "SkillsetGo - Your Path to Skill Mastery",
+  description: "SkillsetGo - Find the Career that fits you perfectly.",
 };
 
 export default function RootLayout({ children }) {
@@ -27,6 +28,7 @@ export default function RootLayout({ children }) {
         <main>
           {children}
         </main>
+        <Footer />
       </body>
     </html>
   )
