@@ -61,7 +61,7 @@ function HeroSection() {
           </div>
           <div className="overflow-visible z-10 -m-6  ">
             <Image 
-              src="/images/chandu.png"  
+              src="/images/homepage/chandu.png"  
               alt="SkillSetGo Hero Illustration"
               width={180}
               height={180}
@@ -102,7 +102,7 @@ function HeroSection() {
         {/* Right Content - Illustration */}
         <div className="flex justify-center lg:justify-end">
           <Image 
-            src="/images/chandu.png"  
+            src="/images/homepage/chandu.png"  
             alt="SkillSetGo Hero Illustration"
             width={400}
             height={300}
@@ -137,22 +137,22 @@ function FourCardsSection() {
     {
       title: "Find the Career That Fits You Best",
       description: "We help students figure out which career suits them through simple tests and one-on-one guidance.",
-      iconPath: "/images/homepagecard1.png"
+      iconPath: "/images/homepage/homepagecard1.png"
     },
     {
       title: "Explore Careers Through Stories & Resources", 
       description: "Students can learn about careers through blogs, vlogs, and a rich career library — all in one place.",
-      iconPath: "/images/homepagecard2.png"
+      iconPath: "/images/homepage/homepagecard2.png"
     },
     {
       title: "Support Schools to Guide Students",
       description: "We work with schools to set up strong career programs in line with the New Education Policy.",
-      iconPath: "/images/homepagecard3.png"
+      iconPath: "/images/homepage/homepagecard3.png"
     },
     {
       title: "Get Help with College Admissions",
       description: "From choosing a course to getting into college, we guide students every step of the way.",
-      iconPath: "/images/homepagecard4.png"
+      iconPath: "/images/homepage/homepagecard4.png"
     }
   ]
 
@@ -253,7 +253,7 @@ function ProgramsSection() {
         "Recommends the best-fit stream: Science, Commerce, or Humanities",
         "Personalized career suggestions"
       ],
-      iconPath: "/images/streamselector.png"
+      iconPath: "/images/homepage/streamselector.png"
     },
     {
       title: "Degree Explorer Test", 
@@ -264,7 +264,7 @@ function ProgramsSection() {
         "Matches students with suitable degrees (BSc, BCom, BA, etc.)",
         "Reduces confusion about college options"
       ],
-      iconPath: "/images/degreeexplorer.png"
+      iconPath: "/images/homepage/degreeexplorer.png"
     },
     {
       title: "College Admission Support",
@@ -275,7 +275,7 @@ function ProgramsSection() {
         "College/course shortlisting support",
         "Covers timelines, available entrance, and tips"
       ],
-      iconPath: "/images/collegeadmission.png"
+      iconPath: "/images/homepage/collegeadmission.png"
     },
     {
       title: "Career Guidance Sessions",
@@ -286,7 +286,7 @@ function ProgramsSection() {
         "Hands-on activities & Q&A",
         "Builds career awareness at the school level"
       ],
-      iconPath: "/images/careerguidance.png"
+      iconPath: "/images/homepage/careerguidance.png"
     },
     {
       title: "Career Orientation for Parents",
@@ -297,7 +297,7 @@ function ProgramsSection() {
         "Shares trends, options & what not to do", 
         "Builds understanding of 21st-century careers"
       ],
-      iconPath: "/images/careerorientation.png"
+      iconPath: "/images/homepage/careerorientation.png"
     },
     {
       title: "Career Awareness for Teachers",
@@ -308,7 +308,7 @@ function ProgramsSection() {
         "Tips on guiding students during academic decisions",
         "Encourages student-teacher career conversations"
       ],
-      iconPath: "/images/careerawareness.png"
+      iconPath: "/images/homepage/careerawareness.png"
     }
   ]
 
