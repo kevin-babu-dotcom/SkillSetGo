@@ -21,15 +21,25 @@ export default function ForInstitutionsPage() {
         {/* Section 1 */}
         <div className="px-4 md:px-0">
           <Section
-            title="Take the Aptitude Test"
-            img="/images/howitworks/aptitude.png"
-            imgAlt="Aptitude Test"
-            button={{ label: "Go to Dashboard", href: "/dashboard" }}
+            title="Choose a Plan That Fits Your School"
+            img="/images/howitworks/plans.png"
+            imgAlt="Choose Plan"
+            button={{ label: "Explore Plans", href: "/plans" }}
             bullets={[
-              "Start by registering on SkillSetGo. If you already have an account, just log in to your dashboard.",
-              "Begin with the RAISEC career interest test, available for free as a sample.",
-              "Want deeper insights? Unlock the full test to continue.",
-              "It only takes about 30 minutes to complete and covers all areas of your personality and career strengths."
+              "Select from three school plans based on your institution's needs:",
+              {
+                heading: "Basic – Test + Reports",
+                sub: []
+              },
+              {
+                heading: "Standard – Test + Reports + Career Workshop",
+                sub: []
+              },
+              {
+                heading: "Advanced – Complete Career Program (Test + Reports + Counseling + Career Workshop)",
+                sub: []
+              },
+              "Flexible pricing for schools of all sizes."
             ]}
           />
         </div>
@@ -38,24 +48,16 @@ export default function ForInstitutionsPage() {
         <div className="w-full bg-[#FFF8E8]">
           <div className="px-4 md:px-0">
             <Section
-              title="Get Your Detailed Career Report"
-              img="/images/howitworks/report.png"
-              imgAlt="Career Report"
-              button={{ label: "Sample Report", href: "/sample-report" }}
+              title="Onboard Your Students"
+              img="/images/howitworks/orientation.png"
+              imgAlt="Onboard Students"
+              button={{ label: "Schedule Orientation", href: "/orientation" }}
               bullets={[
-                "Once you complete the test, your personalized career report will be available in your dashboard.",
-                {
-                  heading: "The report includes:",
-                  sub: [
-                    "Career Interests (RAISEC)",
-                    "Personality Profile (Big Five Traits)",
-                    "Skills & Competencies",
-                    "Value System Assessment",
-                    "Suggested Ideal Career Paths"
-                  ]
-                },
-                "Explore your strengths and discover careers that truly fit you."
+                "We provide login access for all students.",
+                "Conduct orientation sessions (virtual or in-person) for students, parents, and teachers.",
+                "Our team supports your staff in coordinating the entire process."
               ]}
+              reverse={true}
             />
           </div>
         </div>
@@ -95,6 +97,7 @@ export default function ForInstitutionsPage() {
                   ]
                 }
               ]}
+              reverse={true}
             />
           </div>
         </div>
@@ -123,10 +126,10 @@ export default function ForInstitutionsPage() {
 }
 
 /* Section Component */
-function Section({ title, img, imgAlt, button, bullets }) {
+function Section({ title, img, imgAlt, button, bullets, reverse = false }) {
   return (
     <section className="w-full max-w-6xl mx-auto md:px-8 py-3 md:py-10">
-      <div className="w-full flex flex-row items-start justify-between gap-2 md:gap-12">
+      <div className={`w-full flex flex-row items-start justify-between gap-2 md:gap-12 ${reverse ? 'flex-row-reverse' : ''}`}>
         <div className="flex-1">
           <h3 className="font-outfit font-bold text-[11px] md:text-2xl text-black mb-2 md:mb-4">
             {title}
@@ -145,14 +148,16 @@ function Section({ title, img, imgAlt, button, bullets }) {
                   <div className="flex items-start">
                     <Arrow /> <span className="text-black">{b.heading}</span>
                   </div>
-                  <ul className="mt-1 md:mt-2 ml-5 md:ml-8 space-y-1 md:space-y-2">
-                    {b.sub.map((s, si) => (
-                      <li key={si} className="flex items-start text-black">
-                        <span className="font-black mr-1 md:mr-2 text-red-600">❯❯</span>
-                        <span className="text-black text-[8px] md:text-base">{s}</span>
-                      </li>
-                    ))}
-                  </ul>
+                  {b.sub && b.sub.length > 0 && (
+                    <ul className="mt-1 md:mt-2 ml-5 md:ml-8 space-y-1 md:space-y-2">
+                      {b.sub.map((s, si) => (
+                        <li key={si} className="flex items-start text-black">
+                          <span className="font-black mr-1 md:mr-2 text-red-600">❯❯</span>
+                          <span className="text-black text-[8px] md:text-base">{s}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
                 </li>
               )
             })}
