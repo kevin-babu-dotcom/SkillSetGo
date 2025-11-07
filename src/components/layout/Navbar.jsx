@@ -5,13 +5,14 @@ import Image from 'next/image'
 
 export default function Navbar() {
 const [isMenuOpen, setIsMenuOpen] = useState(false)
+const [isPricingOpen, setIsPricingOpen] = useState(false)
 
 const toggleMenu = () => {
 setIsMenuOpen(!isMenuOpen)
 }
 
 return (
-<nav className="bg-white shadow-sm border-b font-outfit">
+<nav className="bg-white shadow-sm font-outfit">
 <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
 <div className="flex justify-between items-center h-16">
     
@@ -39,14 +40,14 @@ return (
         className="text-[#1F1F1F] hover:text-black px-3 py-2 text-md font-bold flex items-center gap-1"
         >
         For Students
-        <Image src="/images/DropDown.png" alt="dropdown arrow" width={12} height={8} className="ml-1"/>
+        <Image src="/images/DropDown.png" alt="dropdown arrow" width={12} height={8} className="ml-1 hover:rotate-180"/>
         </Link>
         <Link 
         href="/for-institutions" 
         className="text-[#1F1F1F] hover:text-gray-900 px-3 py-2 text-md font-bold flex items-center gap-1"
         >
         For Institutions
-        <Image src="/images/DropDown.png" alt="dropdown arrow" width={12} height={8} className="ml-1"/>
+        <Image src="/images/DropDown.png" alt="dropdown arrow" width={12} height={8} className="ml-1 hover:rotate-180"/>
         </Link>
         <Link 
         href="/resources" 
@@ -58,22 +59,47 @@ return (
             alt="dropdown arrow" 
             width={12} 
             height={8} 
-            className="ml-1"
+            className="ml-1 hover:rotate-180"
         />
         </Link>
-        <Link 
-        href="/pricing" 
-        className="text-[#1F1F1F] hover:text-gray-900 px-3 py-2 text-md font-bold flex items-center gap-1"
+        
+        {/* Pricing Dropdown */}
+        <div 
+        className="relative"
+        onMouseEnter={() => setIsPricingOpen(true)}
+        onMouseLeave={() => setIsPricingOpen(false)}
         >
-        Pricing
-        <Image 
+        <button 
+            className="text-[#1F1F1F] hover:text-gray-900 px-3 py-2 text-md font-bold flex items-center gap-1"
+        >
+            Pricing
+            <Image 
             src="/images/DropDown.png"  
             alt="dropdown arrow" 
             width={12} 
             height={8} 
-            className="ml-1"
-        />
-        </Link>
+            className={`ml-1 transition-transform ${isPricingOpen ? 'rotate-180' : ''}`}
+            />
+        </button>
+        
+        {/* Dropdown Menu */}
+        {isPricingOpen && (
+            <div className="absolute top-full left-0 mt-1 w-48 bg-white rounded-md shadow-lg border border-gray-200 py-2 z-50">
+            <Link
+                href="/pricing/students"
+                className="block px-4 py-2 text-sm font-semibold text-[#1F1F1F] hover:bg-gray-100 hover:text-black"
+            >
+                For Students
+            </Link>
+            <Link
+                href="/pricing/schools"
+                className="block px-4 py-2 text-sm font-semibold text-[#1F1F1F] hover:bg-gray-100 hover:text-black"
+            >
+                For Institutions
+            </Link>
+            </div>
+        )}
+        </div>
     </div>
     </div>
 
@@ -143,13 +169,42 @@ return (
         >
         Resources
         </Link>
-        <Link
-        href="/pricing"
-        className="block px-3 py-2 text-base font-bold text-[#1F1F1F] hover:text-gray-900 hover:bg-gray-50"
-        onClick={() => setIsMenuOpen(false)}
+        
+        {/* Mobile Pricing Dropdown */}
+        <div>
+        <button
+            onClick={() => setIsPricingOpen(!isPricingOpen)}
+            className="w-full text-left px-3 py-2 text-base font-bold text-[#1F1F1F] hover:text-gray-900 hover:bg-gray-50 flex items-center justify-between"
         >
-        Pricing
-        </Link>
+            Pricing
+            <Image 
+            src="/images/DropDown.png"  
+            alt="dropdown arrow" 
+            width={12} 
+            height={8} 
+            className={`transition-transform ${isPricingOpen ? 'rotate-180' : ''}`}
+            />
+        </button>
+        {isPricingOpen && (
+            <div className="pl-6 space-y-1">
+            <Link
+                href="/pricing/students"
+                className="block px-3 py-2 text-sm font-semibold text-[#1F1F1F] hover:text-gray-900 hover:bg-gray-50"
+                onClick={() => setIsMenuOpen(false)}
+            >
+                For Students
+            </Link>
+            <Link
+                href="/pricing/schools"
+                className="block px-3 py-2 text-sm font-semibold text-[#1F1F1F] hover:text-gray-900 hover:bg-gray-50"
+                onClick={() => setIsMenuOpen(false)}
+            >
+                For Institutions
+            </Link>
+            </div>
+        )}
+        </div>
+        
         <Link
         href="/signup"
         className="block w-full text-left bg-yellow-400 hover:bg-yellow-500 text-black px-3 py-2 rounded-md text-base font-bold mt-4"

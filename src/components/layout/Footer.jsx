@@ -40,7 +40,7 @@ export default function Footer() {
               </div>
               <div className="flex items-center gap-1">
                 <span className="text-red-500 font-bold text-xs">❯❯</span>
-                <Link href="/refunds" className="hover:underline text-sm">Refunds</Link>
+                <Link href="/refund" className="hover:underline text-sm">Refunds</Link>
               </div>
               <div className="flex items-center gap-1">
                 <span className="text-red-500 font-bold text-xs">❯❯</span>
@@ -87,7 +87,7 @@ export default function Footer() {
                   </div>
                   <div className="flex items-center gap-2">
                     <span className="text-red-500">❯❯</span>
-                    <Link href="/refunds" className="hover:underline">Refunds</Link>
+                    <Link href="/refund" className="hover:underline">Refunds</Link>
                   </div>
                 </div>
               </div>
