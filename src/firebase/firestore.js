@@ -1,9 +1,5 @@
-import { initFirebase } from './config'
-import { getFirestore, doc, setDoc, collection, query, where, getDocs, updateDoc, getDoc } from 'firebase/firestore'
-
-initFirebase()
-
-const db = getFirestore()
+import { db } from './config'
+import { doc, setDoc, collection, query, where, getDocs, updateDoc, getDoc } from 'firebase/firestore'
 
 export { db }
 

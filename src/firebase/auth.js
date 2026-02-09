@@ -1,141 +1,114 @@
-/* Client-side Firebase auth helpers (modular SDK) */
-import { initFirebase } from './config'
-import {
-  getAuth,
+import { 
+  signInWithEmailAndPassword,
   RecaptchaVerifier,
   signInWithPhoneNumber,
-  signInWithEmailAndPassword,
+  PhoneAuthProvider,
+  linkWithCredential,
   createUserWithEmailAndPassword,
   updateProfile,
-  PhoneAuthProvider,
   EmailAuthProvider,
-  linkWithCredential,
-  signOut as firebaseSignOut,
-  onAuthStateChanged,
-  fetchSignInMethodsForEmail
-} from 'firebase/auth'
+  fetchSignInMethodsForEmail,
+  signOut
+} from 'firebase/auth';
+import { auth } from './config'; // Import auth directly
 
-initFirebase()
+// Setup reCAPTCHA verifier for phone authentication
+export function setupRecaptcha(containerId) {
+  return new RecaptchaVerifier(auth, containerId, {
+    size: 'invisible',
+    callback: () => {
+      console.log('reCAPTCHA verified');
+    },
+    'expired-callback': () => {
+      console.log('reCAPTCHA expired');
+    }
+  });
+}
 
-const auth = getAuth()
+// Send OTP to phone number
+export async function sendPhoneOtp(phoneNumber, recaptchaVerifier) {
+  try {
+    const confirmationResult = await signInWithPhoneNumber(
+      auth,
+      phoneNumber,
+      recaptchaVerifier
+    );
+    return confirmationResult;
+  } catch (error) {
+    console.error('Error sending OTP:', error);
+    throw error;
+  }
+}
 
-export { auth }
+// Link email/password credentials to phone-authenticated user
+export async function linkEmailPasswordToPhone(email, password, fullName) {
+  try {
+    const currentUser = auth.currentUser;
+    if (!currentUser) {
+      throw new Error('No user is currently signed in');
+    }
+
+    // Create email credential
+    const credential = EmailAuthProvider.credential(email, password);
+    
+    // Link the email/password to the phone user
+    const linkedResult = await linkWithCredential(currentUser, credential);
+    
+    // Update display name
+    await updateProfile(linkedResult.user, {
+      displayName: fullName
+    });
+
+    return linkedResult;
+  } catch (error) {
+    console.error('Error linking email/password:', error);
+    throw error;
+  }
+}
 
 // Check if email exists in Firebase Auth
 export async function checkEmailExists(email) {
   try {
-    const methods = await fetchSignInMethodsForEmail(auth, email)
-    return methods.length > 0
+    const methods = await fetchSignInMethodsForEmail(auth, email);
+    return methods.length > 0;
   } catch (error) {
-    console.error('Error checking email:', error)
-    return false
+    console.error('Error checking email:', error);
+    throw error;
   }
-}
-
-// Check if phone exists by attempting to get user info (requires server-side check for production)
-// For now, we'll rely on Firestore check in the component
-export async function checkPhoneExistsInAuth(phoneNumber) {
-  // Firebase Auth doesn't have a direct client-side method to check phone
-  // This will be done via Firestore in the signup flow
-  return false
-}
-
-export async function signUpWithEmail({ email, password, fullName }) {
-  const userCred = await createUserWithEmailAndPassword(auth, email, password)
-  if (fullName && userCred.user) {
-    try {
-      await updateProfile(userCred.user, { displayName: fullName })
-    } catch (e) {
-      // non-fatal
-      console.error('updateProfile failed', e)
-    }
-  }
-  return userCred
-}
-
-export function setupRecaptcha(containerId = 'recaptcha-container') {
-  // RecaptchaVerifier must run in browser
-  if (typeof window === 'undefined') return null
-  try {
-    // Modular SDK: auth is first parameter
-    const verifier = new RecaptchaVerifier(auth, containerId, { 
-      size: 'invisible',
-      callback: (response) => {
-        // reCAPTCHA solved, allow signInWithPhoneNumber
-      }
-    })
-    return verifier
-  } catch (e) {
-    console.error('Recaptcha setup error', e)
-    return null
-  }
-}
-
-export async function sendPhoneOtp(phoneNumber, recaptchaVerifier) {
-  if (!recaptchaVerifier) throw new Error('recaptchaVerifier required')
-  // returns confirmationResult
-  const confirmationResult = await signInWithPhoneNumber(auth, phoneNumber, recaptchaVerifier)
-  return confirmationResult
-}
-
-export async function verifyOtpAndLink(confirmationResult, code) {
-  // confirmationResult.confirm(code) verifies the OTP
-  // For linking phone to existing email user, we get the credential first
-  if (!confirmationResult) throw new Error('confirmationResult required')
-  
-  // Get verificationId from confirmationResult
-  const verificationId = confirmationResult.verificationId
-  const credential = PhoneAuthProvider.credential(verificationId, code)
-  
-  // Link phone credential to current email user
-  if (!auth.currentUser) throw new Error('No authenticated user to link phone to')
-  const result = await linkWithCredential(auth.currentUser, credential)
-  return result
-}
-
-// New function: After phone OTP verification, create and link email/password
-export async function linkEmailPasswordToPhone(phoneUser, { email, password, fullName }) {
-  if (!phoneUser) throw new Error('Phone user required')
-  
-  // Step 1: Create email/password credential
-  const emailCredential = EmailAuthProvider.credential(email, password)
-  
-  // Step 2: Link email credential to phone user
-  const linkedResult = await linkWithCredential(phoneUser, emailCredential)
-  
-  // Step 3: Update profile with full name
-  if (fullName) {
-    try {
-      await updateProfile(linkedResult.user, { displayName: fullName })
-    } catch (e) {
-      console.error('updateProfile failed', e)
-    }
-  }
-  
-  return linkedResult
-}
-
-export async function signOut() {
-  return firebaseSignOut(auth)
-}
-
-export function onAuthChanged(cb) {
-  return onAuthStateChanged(auth, cb)
 }
 
 // Login with email and password
 export async function loginWithEmailPassword(email, password) {
-  if (!email || !password) throw new Error('Email and password are required')
-  
-  const userCredential = await signInWithEmailAndPassword(auth, email, password)
-  return userCredential
+  try {
+    const userCredential = await signInWithEmailAndPassword(auth, email, password);
+    return userCredential;
+  } catch (error) {
+    console.error('Error logging in with email/password:', error);
+    throw error;
+  }
 }
 
-// Login with phone OTP - send OTP
+// Login with phone OTP (returns confirmation result to verify later)
 export async function loginWithPhoneOtp(phoneNumber, recaptchaVerifier) {
-  if (!phoneNumber) throw new Error('Phone number is required')
-  if (!recaptchaVerifier) throw new Error('RecaptchaVerifier is required')
-  
-  const confirmationResult = await signInWithPhoneNumber(auth, phoneNumber, recaptchaVerifier)
-  return confirmationResult
+  try {
+    const confirmationResult = await signInWithPhoneNumber(
+      auth,
+      phoneNumber,
+      recaptchaVerifier
+    );
+    return confirmationResult;
+  } catch (error) {
+    console.error('Error sending login OTP:', error);
+    throw error;
+  }
+}
+
+// Sign out
+export async function logout() {
+  try {
+    await signOut(auth);
+  } catch (error) {
+    console.error('Error signing out:', error);
+    throw error;
+  }
 }

@@ -2,6 +2,7 @@
 
 import React, { useEffect, useRef, useState } from "react";
 import Image from "next/image";
+import { useRouter, useSearchParams } from "next/navigation";
 import {
   setupRecaptcha,
   sendPhoneOtp,
@@ -16,7 +17,18 @@ import {
 } from "@/firebase/firestore";
 
 export default function SignupStepper({ profile }) {
-  const [step, setStep] = useState(profile ? 3 : 1);
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const completeProfile = searchParams.get('completeProfile');
+  
+  // If user is logged in and completeProfile=true, start at step 3
+  const [step, setStep] = useState(() => {
+    if (completeProfile === 'true' && auth.currentUser) {
+      return 3;
+    }
+    return profile ? 3 : 1;
+  });
+  
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
@@ -40,11 +52,16 @@ export default function SignupStepper({ profile }) {
   const otpInputRefs = useRef([]);
 
   useEffect(() => {
+    // If completeProfile=true but no authenticated user, redirect to login
+    if (completeProfile === 'true' && !auth.currentUser) {
+      router.push('/login');
+    }
+    
     // cleanup on unmount
     return () => {
       recaptchaVerifierRef.current = null;
     };
-  }, []);
+  }, [completeProfile, router]);
 
   // Normalize phone number to only digits (10 digits)
   const handlePhoneChange = (e) => {
@@ -207,7 +224,13 @@ export default function SignupStepper({ profile }) {
         school
       });
 
-      setStep(4);
+      // If user came from login (completeProfile=true), redirect to dashboard
+      if (completeProfile === 'true') {
+        router.push('/student/dashboard');
+      } else {
+        // Otherwise proceed to success step
+        setStep(4);
+      }
     } catch (err) {
       console.error(err);
       setError(err?.message || "Failed to complete profile");
@@ -220,12 +243,25 @@ export default function SignupStepper({ profile }) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-white p-4 font-outfit">
         <div className="max-w-md mx-auto text-center">
-          <h2 className="text-2xl font-semibold text-[#6B8B23] font-outfit">
-            Signup Complete!
-          </h2>
-          <p className="mt-3 font-outfit">
-            Your account was created successfully. You can now continue to the dashboard.
-          </p>
+          <div className="mb-6">
+            <div className="w-20 h-20 bg-[#6B8B23] rounded-full flex items-center justify-center mx-auto mb-4">
+              <svg className="w-12 h-12 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+              </svg>
+            </div>
+            <h2 className="text-3xl font-bold text-[#6B8B23] mb-3 font-outfit">
+              Signup Complete!
+            </h2>
+            <p className="text-gray-700 text-lg font-outfit">
+              Your account was created successfully. You can now continue to the dashboard.
+            </p>
+          </div>
+          <button
+            onClick={() => router.push('/student/dashboard')}
+            className="bg-[#FDD355] hover:bg-yellow-500 text-black px-8 py-3 rounded-lg font-bold transition-colors font-outfit"
+          >
+            Go to Dashboard
+          </button>
         </div>
       </div>
     );

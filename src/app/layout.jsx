@@ -1,6 +1,6 @@
 import "./globals.css";
 import { Outfit, Inter } from "next/font/google";
-import Navbar from "@/components/layout/Navbar";
+import NavbarWrapper from "@/components/layout/NavbarWrapper";
 import Footer from "@/components/layout/Footer";
 
 // Initialize both fonts
@@ -24,7 +24,7 @@ export default function RootLayout({ children }) {
     // Ensure BOTH variables are included in the className here
     <html lang="en" className={`${InterSans.variable} ${OutfitMono.variable} antialiased`}>
       <body>
-        <Navbar />
+        <NavbarWrapper />
         <main>
           {children}
         </main>

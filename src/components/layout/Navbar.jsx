@@ -12,22 +12,21 @@ setIsMenuOpen(!isMenuOpen)
 }
 
 return (
-<nav className="bg-white shadow-sm font-outfit">
-<div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
-<div className="flex justify-between items-center h-16">
+<nav className="bg-white sticky top-0 z-50 shadow-[0_4px_6px_-1px_rgba(0,0,0,0.1),0_2px_4px_-1px_rgba(0,0,0,0.06)] font-outfit">
+<div className="max-w-7xl mx-auto  px-3 sm:px-6 lg:px-8">
+<div className="flex justify-between items-center h-22">
     
     {/* Logo */}
     <div className="flex-shrink-0">
     <Link href="/" className="flex items-center">
         <Image 
-            src="/images/Logo.png"  
+            src="/images/Logo.svg"  
             alt="SkillSetGo Logo" 
-            width={120}
-            height={40}        
-            className="h-8 w-auto sm:h-10 md:h-12 object-contain"
+            width={400}    
+            height={130}    
+            className="h-16 w-auto sm:h-12 md:h-18 object-contain"
             priority
-            quality={100}
-            unoptimized={true}
+            quality={100}   
         />
     </Link>
     </div>
@@ -37,21 +36,21 @@ return (
     <div className="ml-10 flex items-baseline space-x-8">
         <Link 
         href="/for-students" 
-        className="text-[#1F1F1F] hover:text-black px-3 py-2 text-md font-bold flex items-center gap-1"
+        className="text-[#1F1F1F] hover:text-black px-3 py-2 text-lg font-bold flex items-center gap-1"
         >
         For Students
         <Image src="/images/DropDown.png" alt="dropdown arrow" width={12} height={8} className="ml-1 hover:rotate-180"/>
         </Link>
         <Link 
         href="/for-institutions" 
-        className="text-[#1F1F1F] hover:text-gray-900 px-3 py-2 text-md font-bold flex items-center gap-1"
+        className="text-[#1F1F1F] hover:text-gray-900 px-3 py-2 text-lg font-bold flex items-center gap-1"
         >
         For Institutions
         <Image src="/images/DropDown.png" alt="dropdown arrow" width={12} height={8} className="ml-1 hover:rotate-180"/>
         </Link>
         <Link 
         href="/resources" 
-        className="text-[#1F1F1F] hover:text-gray-900 px-3 py-2 text-md font-bold flex items-center gap-1"
+        className="text-[#1F1F1F] hover:text-gray-900 px-3 py-2 text-lg font-bold flex items-center gap-1"
         >
         Resources
         <Image 
@@ -70,7 +69,7 @@ return (
         onMouseLeave={() => setIsPricingOpen(false)}
         >
         <button 
-            className="text-[#1F1F1F] hover:text-gray-900 px-3 py-2 text-md font-bold flex items-center gap-1"
+            className="text-[#1F1F1F] hover:text-gray-900 px-3 py-2 text-lg font-bold flex items-center gap-1"
         >
             Pricing
             <Image 
@@ -107,13 +106,13 @@ return (
     <div className="hidden md:flex items-center space-x-4 font-outfit">
             <Link 
         href="/signup" 
-        className="bg-[#FDD355] hover:bg-yellow-500 text-black px-5 py-2 rounded-md text-md font-bold transition-colors"
+        className="bg-[#FDD355] hover:bg-yellow-500 text-black px-5 py-2 rounded-md text-lg font-bold transition-colors"
     >
         Get Started
     </Link>
     <Link 
         href="/login" 
-        className="text-[#1F1F1F] hover:text-gray-900 px-4 py-2 text-md font-bold"
+        className="text-[#1F1F1F] hover:text-gray-900 px-4 py-2 text-lg font-bold"
     >
         Login
     </Link>
@@ -123,7 +122,7 @@ return (
     <div className="md:hidden flex items-center space-x-4 font-outfit">
     <Link 
         href="/login" 
-        className="bg-yellow-400 hover:bg-yellow-500 text-black px-4 py-1 rounded text-md font-bold"
+        className="bg-yellow-400 hover:bg-yellow-500 text-black px-4 py-1 rounded text-lg font-bold"
     >
         Login
     </Link>
