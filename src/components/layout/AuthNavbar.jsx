@@ -99,6 +99,13 @@
                 <Image src="/images/DropDown.png" alt="dropdown arrow" width={12} height={8} className="ml-1 hover:rotate-180"/>
                 </Link>
                 <Link 
+                href="/dashboard/assessment/career-interests" 
+                className="text-[#1F1F1F] hover:text-black px-3 py-2 text-lg font-bold flex items-center gap-1"
+                >
+                Assessments
+                <Image src="/images/DropDown.png" alt="dropdown arrow" width={12} height={8} className="ml-1 hover:rotate-180"/>
+                </Link>
+                <Link 
                 href="/help" 
                 className="text-[#1F1F1F] hover:text-black px-3 py-2 text-lg font-bold flex items-center gap-1"
                 >
@@ -157,6 +164,13 @@
                         My Tests
                     </Link>
                     <Link
+                        href="/dashboard/assessment/career-interests"
+                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                        onClick={() => setIsProfileMenuOpen(false)}
+                    >
+                        Take Assessment
+                    </Link>
+                    <Link
                         href="/student/results"
                         className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                         onClick={() => setIsProfileMenuOpen(false)}
@@ -194,6 +208,12 @@
                 className="block px-3 py-2 text-base font-bold text-[#1F1F1F] hover:text-gray-900 hover:bg-gray-50"
             >
                 Career Library
+            </Link>
+            <Link 
+                href="/dashboard/assessment/career-interests" 
+                className="block px-3 py-2 text-base font-bold text-[#1F1F1F] hover:text-gray-900 hover:bg-gray-50"
+            >
+                Assessments
             </Link>
             <Link 
                 href="/help" 

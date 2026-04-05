@@ -47,7 +47,13 @@ export default function TestsPage() {
         
         <div className="bg-[#FAF0DC] rounded-lg p-8 text-center">
           <p className="text-gray-600 text-lg mb-4">No tests available yet</p>
-          <p className="text-gray-500">Start your career journey by taking the Stream Fitness Test from your dashboard</p>
+          <p className="text-gray-500 mb-6">Start your career journey by taking the Stream Fitness Test from your dashboard</p>
+          <button
+            onClick={() => router.push('/dashboard/assessment/career-interests')}
+            className="inline-block bg-[#6B8B23] text-white px-8 py-3 rounded-lg font-semibold hover:bg-[#5a7519] transition-colors"
+          >
+            Start Career Assessment
+          </button>
         </div>
       </div>
     </main>
