@@ -1,5 +1,5 @@
 'use client'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { auth } from '@/firebase/config'
 import { getUserProfile } from '@/firebase/firestore'
 import { useRouter } from 'next/navigation'
@@ -11,6 +11,24 @@ export default function StudentDashboard() {
   const [profile, setProfile] = useState(null)
   const [loading, setLoading] = useState(true)
   const [showRoadmap, setShowRoadmap] = useState(false)
+  const roadmapRef = useRef(null)
+  
+  // Close roadmap when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (roadmapRef.current && !roadmapRef.current.contains(event.target)) {
+        setShowRoadmap(false)
+      }
+    }
+
+    if (showRoadmap) {
+      document.addEventListener('mousedown', handleClickOutside)
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside)
+    }
+  }, [showRoadmap])
   
   useEffect(() => {
         const unsubscribe = auth.onAuthStateChanged(async (currentUser) => {
@@ -125,7 +143,7 @@ export default function StudentDashboard() {
         <main className="min-h-screen bg-[#ffffff] font-outfit relative">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
             {/* Header Section */}
-            <div className="bg-[#FAF0DC] rounded-lg p-6 mb-6 flex flex-col lg:flex-row items-start lg:items-center justify-between">
+            <div className="bg-[#FAF0DC] rounded-lg p-6 mb-6 flex flex-col lg:flex-row items-start lg:items-center justify-between shadow-md hover:shadow-lg transition-shadow">
                 <div className="mb-4 lg:mb-0">
                 <h1 className="text-2xl lg:text-3xl font-bold mb-2 font-outfit">
                     Hi There! {profile?.fullName || 'Student Name'}
@@ -151,7 +169,7 @@ export default function StudentDashboard() {
             {/* Status Cards Row */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
                 {/* Current Status */}
-                <div className="bg-[#FAF0DC] rounded-lg p-6">
+                <div className="bg-[#FAF0DC] rounded-lg p-6 shadow-md hover:shadow-lg transition-shadow flex flex-col h-full">
                 <h2 className="text-xl font-bold mb-4 text-center font-outfit">CURRENT STATUS</h2>
                 <div className="flex items-center justify-center mb-4">
                     <div className="w-20 h-20 bg-[#6B8B23] rounded-full flex items-center justify-center">
@@ -160,14 +178,14 @@ export default function StudentDashboard() {
                     </svg>
                     </div>
                 </div>
-                <div className="text-center mb-4">
+                <div className="text-center mb-4 flex-grow">
                     <p className="text-2xl font-bold font-outfit">0/10</p>
                     <p className="text-gray-700 font-outfit">Levels Completed</p>
                 </div>
-                <div className="text-center">
+                <div className="text-center mt-auto">
                     <button 
                     onClick={() => setShowRoadmap(true)}
-                    className="bg-[#FDD355] hover:bg-yellow-500 text-black px-6 py-2 rounded font-bold transition-colors font-outfit"
+                    className="w-full bg-[#FDD355] hover:bg-yellow-500 text-black px-6 py-2 rounded font-bold transition-colors font-outfit shadow-sm hover:shadow-md"
                     >
                     See Progress
                     </button>
@@ -175,7 +193,7 @@ export default function StudentDashboard() {
                 </div>
 
                 {/* Ongoing Level */}
-                <div className="bg-[#FAF0DC] rounded-lg p-6">
+                <div className="bg-[#FAF0DC] rounded-lg p-6 shadow-md hover:shadow-lg transition-shadow flex flex-col h-full">
                 <h2 className="text-xl font-bold mb-4 text-center font-outfit">ONGOING LEVEL</h2>
                 <div className="flex items-center justify-center mb-4">
                     <div className="w-20 h-20 bg-[#6B8B23] rounded-full flex items-center justify-center">
@@ -184,19 +202,19 @@ export default function StudentDashboard() {
                     </svg>
                     </div>
                 </div>
-                <div className="text-center mb-4">
+                <div className="text-center mb-4 flex-grow">
                     <p className="text-gray-700 font-bold font-outfit">Continue Upcoming</p>
                     <p className="text-gray-700 font-outfit">Level</p>
                 </div>
-                <div className="text-center">
-                    <button className="bg-[#FDD355] hover:bg-yellow-500 text-black px-6 py-2 rounded font-bold transition-colors font-outfit">
+                <div className="text-center mt-auto">
+                    <button className="w-full bg-[#FDD355] hover:bg-yellow-500 text-black px-6 py-2 rounded font-bold transition-colors font-outfit">
                     See Progress
                     </button>
                 </div>
                 </div>
 
                 {/* Upcoming Level */}
-                <div className="bg-[#FAF0DC] rounded-lg p-6">
+                <div className="bg-[#FAF0DC] rounded-lg p-6 shadow-md hover:shadow-lg transition-shadow flex flex-col h-full">
                 <h2 className="text-xl font-bold mb-4 text-center font-outfit">UPCOMING LEVEL</h2>
                 <div className="flex items-center justify-center mb-4">
                     <div className="w-20 h-20 bg-[#6B8B23] rounded-full flex items-center justify-center">
@@ -205,12 +223,12 @@ export default function StudentDashboard() {
                     </svg>
                     </div>
                 </div>
-                <div className="text-center mb-4">
+                <div className="text-center mb-4 flex-grow">
                     <p className="text-gray-700 font-bold font-outfit">Start Interest</p>
                     <p className="text-gray-700 font-outfit">Explorer</p>
                 </div>
-                <div className="text-center">
-                    <button className="bg-[#FDD355] hover:bg-yellow-500 text-black px-6 py-2 rounded font-bold transition-colors font-outfit">
+                <div className="text-center mt-auto">
+                    <button className="w-full bg-[#FDD355] hover:bg-yellow-500 text-black px-6 py-2 rounded font-bold transition-colors font-outfit">
                     Start Now
                     </button>
                 </div>
@@ -218,10 +236,10 @@ export default function StudentDashboard() {
             </div>
 
             {/* Main Content Row */}
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 auto-rows-max lg:auto-rows-max">
                 {/* Left Sidebar - Profile & Menu */}
                 <div className="lg:col-span-1">
-                <div className="bg-[#FAF0DC] rounded-lg p-6">
+                <div className="bg-[#FAF0DC] rounded-lg p-6 shadow-md hover:shadow-lg transition-shadow flex flex-col h-full\">
                     <div className="flex items-center gap-4 mb-6">
                     <div className="w-16 h-16 rounded-full bg-[#6B8B23] flex items-center justify-center overflow-hidden">
                         {profile?.photoURL ? (
@@ -244,34 +262,34 @@ export default function StudentDashboard() {
                     </div>
                     </div>
 
-                    <nav className="space-y-2">
+                    <nav className="space-y-2 flex flex-col flex-grow mt-6\">
                     <a
                         href="/student/dashboard"
-                        className="block py-3 px-4 rounded font-bold bg-white text-black font-outfit"
+                        className="block py-3 px-4 rounded font-bold bg-white text-black font-outfit shadow-sm hover:shadow-md transition-shadow"
                     >
                         Dashboard
                     </a>
                     <a
                         href="/student/profile"
-                        className="block py-3 px-4 rounded font-bold hover:bg-white text-black transition-colors font-outfit"
+                        className="block py-3 px-4 rounded font-bold hover:bg-white text-black transition-colors bg-[#FAF0DC] hover:shadow-md shadow-sm font-outfit"
                     >
                         My Profile
                     </a>
                     <a
                         href="/student/career-library"
-                        className="block py-3 px-4 rounded font-bold hover:bg-white text-black transition-colors font-outfit"
+                        className="block py-3 px-4 rounded font-bold hover:bg-white text-black transition-colors bg-[#FAF0DC] hover:shadow-md shadow-sm font-outfit"
                     >
                         Career Library
                     </a>
                     <a
                         href="/help"
-                        className="block py-3 px-4 rounded font-bold hover:bg-white text-black transition-colors font-outfit"
+                        className="block py-3 px-4 rounded font-bold hover:bg-white text-black transition-colors bg-[#FAF0DC] hover:shadow-md shadow-sm font-outfit"
                     >
                         Help & Support
                     </a>
                     <button
                         onClick={() => auth.signOut().then(() => router.push('/login'))}
-                        className="block w-full text-left py-3 px-4 rounded font-bold hover:bg-white text-red-600 transition-colors font-outfit"
+                        className="block w-full text-left py-3 px-4 rounded font-bold text-black transition-colors bg-[#FAF0DC] hover:bg-red-100 hover:text-red-600 hover:shadow-md shadow-sm font-outfit mt-auto\"
                     >
                         Log Out
                     </button>
@@ -282,7 +300,7 @@ export default function StudentDashboard() {
                 {/* Right Content - Test Info & Events */}
                 <div className="lg:col-span-2 space-y-6">
                 {/* Stream Fitness Test Card */}
-                <div className="bg-[#FAF0DC] rounded-lg p-6">
+                <div className="bg-[#FAF0DC] rounded-lg p-6 shadow-md hover:shadow-lg transition-shadow">
                     <div className="flex flex-col md:flex-row gap-6">
                     <div className="md:w-1/3">
                         <Image
@@ -305,7 +323,7 @@ export default function StudentDashboard() {
                         <p className="text-sm text-gray-600 mb-4 font-outfit">
                         <strong>Test Duration:</strong> 90-120 min (approx.)
                         </p>
-                        <button className="w-full bg-[#FDD355] hover:bg-yellow-500 text-black py-3 rounded font-bold transition-colors font-outfit">
+                        <button className="w-full bg-[#FDD355] hover:bg-yellow-500 text-black py-3 rounded font-bold transition-colors font-outfit shadow-sm hover:shadow-md\">
                         Start Now
                         </button>
                     </div>
@@ -313,7 +331,7 @@ export default function StudentDashboard() {
                 </div>
 
                 {/* Upcoming Events */}
-                <div className="bg-[#FAF0DC] rounded-lg p-6">
+                <div className="bg-[#FAF0DC] rounded-lg p-6 shadow-md hover:shadow-lg transition-shadow">
                     <h2 className="text-2xl font-bold mb-4 font-outfit">UPCOMING EVENTS / ANNOUNCEMENTS</h2>
                     <div className="text-gray-600 font-outfit">
                     <p>No upcoming events at the moment.</p>
@@ -326,7 +344,7 @@ export default function StudentDashboard() {
 
         {/* Slide-in Roadmap Panel */}
         {/* Slide Panel - Always rendered but slides in/out */}
-        <div className={`fixed top-0 right-0 h-full w-full md:w-2/3 lg:w-1/2 bg-white z-[70] shadow-2xl transform transition-transform duration-300 ease-in-out overflow-y-auto ${showRoadmap ? 'translate-x-0' : 'translate-x-full'}`}>
+        <div ref={roadmapRef} className={`fixed top-0 right-0 h-full w-full md:w-2/3 lg:w-1/2 bg-white z-[70] shadow-2xl transform transition-transform duration-300 ease-in-out overflow-y-auto ${showRoadmap ? 'translate-x-0' : 'translate-x-full'}`}>
                 <div className="p-6">
                 {/* Close Button */}
                 <button 
@@ -347,11 +365,11 @@ export default function StudentDashboard() {
                 </div>
 
                 {/* Levels List */}
-                <div className="space-y-4">
+                <div className="space-y-3">
                     {levels.map((level) => (
                     <div 
                         key={level.number} 
-                        className="bg-[#F5F5DC] rounded-lg p-4 flex items-start gap-3 hover:shadow-md transition-shadow"
+                        className="bg-white rounded-lg p-4 flex items-start gap-3 shadow-sm hover:shadow-md transition-shadow border border-gray-100"
                     >
                         {/* Level Number Circle */}
                         <div className={`${level.color} rounded-full w-10 h-10 flex items-center justify-center flex-shrink-0`}>

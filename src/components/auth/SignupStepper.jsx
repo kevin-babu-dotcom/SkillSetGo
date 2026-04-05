@@ -7,8 +7,8 @@ import {
   setupRecaptcha,
   sendPhoneOtp,
   linkEmailPasswordToPhone,
-  auth,
 } from "@/firebase/auth";
+import { auth } from "@/firebase/config";
 import { 
   checkEmailExistsInFirestore, 
   checkPhoneExists,
@@ -127,13 +127,25 @@ export default function SignupStepper({ profile }) {
       }
 
       // Both email and phone are available - proceed with phone OTP
-      const verifier = setupRecaptcha(recaptchaContainerId);
-      recaptchaVerifierRef.current = verifier;
+      // Only setup reCAPTCHA if we haven't already done so
+      let verifier;
+      if (recaptchaVerifierRef.current) {
+        // Already verified, reuse existing verifier
+        verifier = recaptchaVerifierRef.current;
+      } else {
+        // First time, setup new reCAPTCHA
+        verifier = setupRecaptcha(recaptchaContainerId);
+        recaptchaVerifierRef.current = verifier;
+      }
+      
       const confirmResult = await sendPhoneOtp(e164Phone, verifier);
       setConfirmationResult(confirmResult);
       setStep(2);
     } catch (err) {
       console.error(err);
+      
+      // Don't clear reCAPTCHA - we'll reuse it on retry
+      // This avoids the "already rendered" error
       
       // Handle specific Firebase Auth errors
       let errorMessage = err?.message || "Failed to verify availability or send OTP";
@@ -168,11 +180,7 @@ export default function SignupStepper({ profile }) {
       const phoneUser = phoneResult.user;
 
       // Step 2: Link email/password to phone account
-      const linkedResult = await linkEmailPasswordToPhone(phoneUser, {
-        email,
-        password,
-        fullName
-      });
+      const linkedResult = await linkEmailPasswordToPhone(email, password, fullName);
 
       // Step 3: Save initial profile to Firestore with notCompleted=true
       const e164Phone = getE164Phone();
@@ -485,6 +493,7 @@ export default function SignupStepper({ profile }) {
             src="/images/signup/signupbanner.png"
             alt="Signup Banner"
             fill
+            sizes="(max-width: 1024px) 100vw, 50vw"
             className="object-contain"
             priority
           />

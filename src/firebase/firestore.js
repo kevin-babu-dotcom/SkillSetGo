@@ -98,3 +98,25 @@ export async function getUserProfile(uid) {
   }
   return null
 }
+
+// Update user profile data
+export async function updateUserProfile(uid, data) {
+  if (!uid) throw new Error('uid required')
+  const ref = doc(db, 'users', uid)
+  await updateDoc(ref, {
+    ...data,
+    updatedAt: new Date().toISOString()
+  })
+  return ref
+}
+
+// Update user profile photo
+export async function updateUserProfilePhoto(uid, photoURL) {
+  if (!uid) throw new Error('uid required')
+  const ref = doc(db, 'users', uid)
+  await updateDoc(ref, {
+    photoURL,
+    updatedAt: new Date().toISOString()
+  })
+  return ref
+}

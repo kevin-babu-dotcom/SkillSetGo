@@ -182,6 +182,7 @@ export default function LoginForm() {
                 src="/images/signup/signupbanner.png"
                 alt="Login Banner"
                 fill
+                sizes="(max-width: 1024px) 100vw, 50vw"
                 className="object-contain"
                 priority
             />

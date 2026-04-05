@@ -2,16 +2,20 @@
 import { useState, useEffect } from 'react'
 import { auth } from '@/firebase/config'
 import { getUserProfile } from '@/firebase/firestore'
+import { getDegreeExplorerPrice, isJuniorClass } from '@/lib/pricing'
 import { useRouter } from 'next/navigation'
 
 export default function UpgradePage() {
   const router = useRouter()
   const [user, setUser] = useState(null)
   const [profile, setProfile] = useState(null)
+  const [studentClass, setStudentClass] = useState(null)
+  const [degreeExplorerPrice, setDegreeExplorerPrice] = useState(69900) // Default ₹699 in paise
   const [loading, setLoading] = useState(true)
   const [tier3Sessions, setTier3Sessions] = useState(2)
   const [showCheckout, setShowCheckout] = useState(false)
   const [selectedTier, setSelectedTier] = useState(null)
+  const [isPaying, setIsPaying] = useState(false)
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(async (currentUser) => {
@@ -24,8 +28,17 @@ export default function UpgradePage() {
       try {
         const userProfile = await getUserProfile(currentUser.uid)
         setProfile(userProfile)
+        
+        // Set student's class and calculate degree explorer price
+        if (userProfile?.class) {
+          setStudentClass(userProfile.class)
+          const price = getDegreeExplorerPrice(userProfile.class)
+          setDegreeExplorerPrice(price)
+        }
       } catch (error) {
         console.error('Error fetching profile:', error)
+        // Default to senior pricing if fetch fails
+        setDegreeExplorerPrice(69900)
       } finally {
         setLoading(false)
       }
@@ -55,20 +68,118 @@ export default function UpgradePage() {
     setShowCheckout(true)
   }
 
-  if (loading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-xl font-outfit">Loading...</div>
-      </div>
-    )
+  const loadRazorpayScript = () =>
+    new Promise((resolve) => {
+      if (typeof window !== 'undefined' && window.Razorpay) return resolve(true)
+      const script = document.createElement('script')
+      script.src = 'https://checkout.razorpay.com/v1/checkout.js'
+      script.async = true
+      script.onload = () => resolve(true)
+      script.onerror = () => resolve(false)
+      document.body.appendChild(script)
+    })
+
+  const handleProceedToPayment = async () => {
+    if (!selectedTier?.key || !user) return
+
+    if (selectedTier.key === 'free') {
+      alert('Free tier does not require payment.')
+      return
+    }
+
+    setIsPaying(true)
+    try {
+      const scriptLoaded = await loadRazorpayScript()
+      if (!scriptLoaded) throw new Error('Failed to load Razorpay SDK')
+
+      const idToken = await user.getIdToken()
+
+      // SECURITY: Send only tier and sessions (if applicable). Never send price from frontend.
+      const payload = { tier: selectedTier.key }
+      if (selectedTier.key === 'college_admission') {
+        payload.sessions = tier3Sessions
+      }
+
+      const createOrderRes = await fetch('/api/create-order', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${idToken}`,
+        },
+        body: JSON.stringify(payload),
+      })
+
+      const createOrderData = await createOrderRes.json()
+      if (!createOrderRes.ok) {
+        throw new Error(createOrderData?.error || 'Failed to create order')
+      }
+
+      const { order, keyId, tier } = createOrderData
+
+      const rzp = new window.Razorpay({
+        key: keyId,
+        order_id: order.id,
+        amount: order.amount,
+        currency: order.currency,
+        name: 'SkillSetGo',
+        description: `Upgrade to ${tier}`,
+        prefill: {
+          name: profile?.name || '',
+          email: user?.email || '',
+          contact: profile?.phone || '',
+        },
+        notes: {
+          tier,
+        },
+        handler: async function (response) {
+          // SECURITY: Verify signature server-side before any DB update.
+          const verifyRes = await fetch('/api/verify-payment', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: `Bearer ${idToken}`,
+            },
+            body: JSON.stringify({
+              tier,
+              razorpay_order_id: response.razorpay_order_id,
+              razorpay_payment_id: response.razorpay_payment_id,
+              razorpay_signature: response.razorpay_signature,
+            }),
+          })
+
+          const verifyData = await verifyRes.json()
+          if (!verifyRes.ok) {
+            alert(verifyData?.error || 'Payment verification failed')
+            return
+          }
+
+          alert('Payment successful and verified.')
+          setShowCheckout(false)
+          router.refresh()
+        },
+      })
+
+      rzp.on('payment.failed', function () {
+        alert('Payment failed. Please try again.')
+      })
+
+      // Close checkout modal when Razorpay opens
+      setShowCheckout(false)
+      rzp.open()
+    } catch (error) {
+      console.error(error)
+      alert(error.message || 'Unable to start payment')
+    } finally {
+      setIsPaying(false)
+    }
   }
 
   const tiers = [
     {
+      key: 'stream_fit',
       name: 'Tier 1',
       subtitle: 'Get',
       price: '₹0',
-      priceValue: 0,
       tag: 'Current Plan',
       features: [
         { name: 'Career Assessment', status: 'partial', note: 'Part 1 of 4' },
@@ -84,10 +195,10 @@ export default function UpgradePage() {
       current: true
     },
     {
+      key: 'degree_explorer',
       name: 'Tier 2',
       subtitle: 'Set',
       price: '₹499',
-      priceValue: 499,
       tag: null,
       features: [
         { name: 'Career Assessment', status: 'available' },
@@ -105,10 +216,10 @@ export default function UpgradePage() {
       current: false
     },
     {
+      key: 'college_admission',
       name: 'Tier 3',
       subtitle: 'Go',
       price: `₹${calculateTier3Price()}`,
-      priceValue: calculateTier3Price(),
       tag: 'Recommended',
       features: [
         { name: 'Career Assessment', status: 'available' },
@@ -129,6 +240,14 @@ export default function UpgradePage() {
       sessions: tier3Sessions
     }
   ]
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-[#6B8B23]"></div>
+      </div>
+    )
+  }
 
   return (
     <>
@@ -179,7 +298,7 @@ export default function UpgradePage() {
                   <div className="mb-2">
                     <p className="text-3xl font-bold font-outfit">{tier.price}</p>
                     {tier.tag === 'Current Plan' && (
-                      <p className="text-sm font-semibold bg-[#FDD355] inline-block px-3 py-1 rounded-full mt-2">
+                      <p className="text-md  font-semibold bg-[#FDD355] inline-block px-6 py-2 rounded-full mt-2">
                         Current Plan
                       </p>
                     )}
@@ -381,8 +500,12 @@ export default function UpgradePage() {
               </div>
 
               {/* Payment Button */}
-              <button className="w-full bg-[#6B8B23] hover:bg-[#5a7a1e] text-white font-bold py-3 rounded-lg transition-colors mb-3 font-outfit">
-                Proceed to Payment
+              <button
+                onClick={handleProceedToPayment}
+                disabled={isPaying}
+                className="w-full bg-[#6B8B23] hover:bg-[#5a7a1e] disabled:opacity-60 text-white font-bold py-3 rounded-lg transition-colors mb-3 font-outfit"
+              >
+                {isPaying ? 'Processing...' : 'Proceed to Payment'}
               </button>
 
               {/* Important Notes */}

@@ -1,5 +1,5 @@
     'use client'
-    import { useState, useEffect } from 'react'
+    import { useState, useEffect, useRef } from 'react'
     import Link from 'next/link'
     import Image from 'next/image'
     import { auth } from '@/firebase/config'
@@ -11,6 +11,24 @@
     const [user, setUser] = useState(null)
     const [profile, setProfile] = useState(null)
     const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false)
+    const profileMenuRef = useRef(null)
+
+    // Close profile menu when clicking outside
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (profileMenuRef.current && !profileMenuRef.current.contains(event.target)) {
+                setIsProfileMenuOpen(false)
+            }
+        }
+
+        if (isProfileMenuOpen) {
+            document.addEventListener('mousedown', handleClickOutside)
+        }
+
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside)
+        }
+    }, [isProfileMenuOpen])
 
     useEffect(() => {
         const unsubscribe = auth.onAuthStateChanged(async (currentUser) => {
@@ -44,7 +62,7 @@
             
             {/* Logo */}
             <div className="flex-shrink-0">
-                <Link href="/student/dashboard" className="flex items-center">
+                <Link href="/" className="flex items-center">
                 <Image 
                         src="/images/Logo.svg"  
                         alt="SkillSetGo Logo" 
@@ -91,7 +109,7 @@
 
             {/* Profile Section */}
             <div className="flex items-center">
-                <div className="relative">
+                <div className="relative" ref={profileMenuRef}>
                 <button
                     onClick={() => setIsProfileMenuOpen(!isProfileMenuOpen)}
                     className="flex items-center focus:outline-none"

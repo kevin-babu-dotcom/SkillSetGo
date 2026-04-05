@@ -6,9 +6,12 @@ import {
   linkWithCredential,
   createUserWithEmailAndPassword,
   updateProfile,
+  updatePassword,
+  updateEmail,
   EmailAuthProvider,
   fetchSignInMethodsForEmail,
-  signOut
+  signOut,
+  reauthenticateWithCredential
 } from 'firebase/auth';
 import { auth } from './config'; // Import auth directly
 
@@ -109,6 +112,59 @@ export async function logout() {
     await signOut(auth);
   } catch (error) {
     console.error('Error signing out:', error);
+    throw error;
+  }
+}
+
+// Change user password (requires reauthentication with current password)
+export async function changePassword(currentPassword, newPassword) {
+  try {
+    const user = auth.currentUser;
+    if (!user || !user.email) {
+      throw new Error('No authenticated user');
+    }
+
+    // Reauthenticate with current password
+    const credential = EmailAuthProvider.credential(user.email, currentPassword);
+    await reauthenticateWithCredential(user, credential);
+
+    // Update password
+    await updatePassword(user, newPassword);
+    return { success: true };
+  } catch (error) {
+    console.error('Error changing password:', error);
+    throw error;
+  }
+}
+
+// Update user profile information (display name)
+export async function updateUserFirebaseProfile(updates) {
+  try {
+    const user = auth.currentUser;
+    if (!user) {
+      throw new Error('No authenticated user');
+    }
+
+    await updateProfile(user, updates);
+    return user;
+  } catch (error) {
+    console.error('Error updating profile:', error);
+    throw error;
+  }
+}
+
+// Update user email
+export async function updateUserEmail(newEmail) {
+  try {
+    const user = auth.currentUser;
+    if (!user) {
+      throw new Error('No authenticated user');
+    }
+
+    await updateEmail(user, newEmail);
+    return user;
+  } catch (error) {
+    console.error('Error updating email:', error);
     throw error;
   }
 }
