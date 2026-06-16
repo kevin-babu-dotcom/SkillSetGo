@@ -2,7 +2,7 @@ import crypto from 'crypto'
 import { NextResponse } from 'next/server'
 import razorpay from '@/lib/razorpay'
 import { normalizeTier, getPriceForTier } from '@/lib/pricing'
-import { adminAuth, adminDb, db } from '@/lib/firebaseAdmin'
+import { adminAuth, adminDb } from '@/lib/firebaseAdmin'
 
 /**
  * Timing-safe string comparison

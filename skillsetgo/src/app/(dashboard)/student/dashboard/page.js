@@ -229,7 +229,7 @@ export default function StudentDashboard() {
                 </div>
                 <div className="text-center mt-auto">
                     <button 
-                    onClick={() => router.push('/dashboard/assessment/stream-fitness-test')}
+                    onClick={() => router.push('/student/tests')}
                       className="w-full bg-[#FDD355] hover:bg-yellow-500 text-black px-6 py-2 rounded font-bold transition-colors font-outfit"
                     >
                     Start Now
@@ -320,14 +320,14 @@ export default function StudentDashboard() {
                         evaluates you across four sections to give a complete picture of your strengths 
                         and perfect stream fit.
                         </p>
-                        <p className="text-sm text-gray-600 mb-2 font-outfit">
+                        <p className="text-sm text-gray-600 mb-2">
                         <strong>Sections Covered:</strong> Interests, Personality, Aptitude, and Self Efficacy
                         </p>
-                        <p className="text-sm text-gray-600 mb-4 font-outfit">
+                        <p className="text-sm text-gray-600 mb-4">
                         <strong>Test Duration:</strong> 90-120 min (approx.)
                         </p>
                         <button 
-                          onClick={() => router.push('/dashboard/assessment/stream-fitness-test')}
+                          onClick={() => router.push('/student/tests')}
                           className="w-full bg-[#FDD355] hover:bg-yellow-500 text-black py-3 rounded font-bold transition-colors font-outfit shadow-sm hover:shadow-md"
                         >
                         Start Now

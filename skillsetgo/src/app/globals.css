@@ -20,4 +20,11 @@
 
 body {
   background: var(--background);
+  font-family: var(--font-inter-sans);
+  @apply font-inter;
+}
+
+/* Headings use Outfit */
+h1, h2, h3, h4, h5, h6 {
+  @apply font-outfit;
 }

@@ -249,7 +249,7 @@ export default function SignupStepper({ profile }) {
 
   if (step === 4) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-white p-4 font-outfit">
+      <div className="min-h-screen flex items-center justify-center bg-white p-4">
         <div className="max-w-md mx-auto text-center">
           <div className="mb-6">
             <div className="w-20 h-20 bg-[#6B8B23] rounded-full flex items-center justify-center mx-auto mb-4">
@@ -260,13 +260,13 @@ export default function SignupStepper({ profile }) {
             <h2 className="text-3xl font-bold text-[#6B8B23] mb-3 font-outfit">
               Signup Complete!
             </h2>
-            <p className="text-gray-700 text-lg font-outfit">
+            <p className="text-gray-700 text-lg">
               Your account was created successfully. You can now continue to the dashboard.
             </p>
           </div>
           <button
             onClick={() => router.push('/student/dashboard')}
-            className="bg-[#FDD355] hover:bg-yellow-500 text-black px-8 py-3 rounded-lg font-bold transition-colors font-outfit"
+            className="bg-[#FDD355] hover:bg-yellow-500 text-black px-8 py-3 rounded-lg font-bold transition-colors"
           >
             Go to Dashboard
           </button>
@@ -276,7 +276,7 @@ export default function SignupStepper({ profile }) {
   }
 
   return (
-    <div className="min-h-screen h-screen bg-white flex flex-col lg:flex-row overflow-scroll font-outfit">
+    <div className="min-h-screen h-screen bg-white flex flex-col lg:flex-row overflow-scroll">
       {/* Left side - Form (Desktop: Left, Mobile: Top) */}
       <div className="order-1 lg:order-1 w-full lg:w-1/2 flex items-center justify-center p-6 lg:p-12 lg:pr-6">
         <div className="w-full max-w-xl">
@@ -288,7 +288,7 @@ export default function SignupStepper({ profile }) {
                 style={{ width: `${(step / 3) * 100}%` }}
               ></div>
             </div>
-            <p className="text-sm text-gray-600 mt-2 text-center font-outfit">
+            <p className="text-sm text-gray-600 mt-2 text-center">
               Step {step} of 3
             </p>
           </div>
@@ -298,20 +298,20 @@ export default function SignupStepper({ profile }) {
           </h2>
           
           {step === 2 && (
-            <p className="text-sm text-gray-600 mb-4 font-outfit">{getE164Phone()}</p>
+          <p className="text-sm text-gray-600 mb-4">{getE164Phone()}</p>
           )}
 
           {error && (
-            <div className="text-red-600 bg-red-50 p-3 rounded mb-4 text-sm font-outfit">
+            <div className="text-red-600 bg-red-50 p-3 rounded mb-4 text-sm">
               {error}
             </div>
           )}
 
           {/* Step 1: Basic Information */}
           {step === 1 && (
-            <form onSubmit={handleStep1} className="space-y-4 font-outfit">
+            <form onSubmit={handleStep1} className="space-y-4">
               <div>
-                <label className="block text-lg font-medium mb-1 font-outfit">Full Name*</label>
+                <label className="block text-lg font-medium mb-1">Full Name*</label>
                 <input
                   required
                   value={fullName}
@@ -321,7 +321,7 @@ export default function SignupStepper({ profile }) {
                 />
               </div>
               <div>
-                <label className="block text-lg font-medium mb-1 font-outfit">Email Address*</label>
+                <label className="block text-lg font-medium mb-1">Email Address*</label>
                 <input
                   required
                   type="email"

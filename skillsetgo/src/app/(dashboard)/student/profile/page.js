@@ -352,7 +352,7 @@ export default function StudentProfilePage() {
       await verifyOtpCode(emailVerifyMethod, emailOtpCode, emailConfirmationResult);
       
       // Update the user's email securely after successful OTP
-      await updateUserEmail(auth.currentUser, formData.email);
+      await updateUserEmail(formData.email);
       await executeProfileSave(formData.email);
       
       setShowEmailVerifyModal(false);

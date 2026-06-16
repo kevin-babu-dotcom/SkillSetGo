@@ -21,6 +21,16 @@ export const useAssessmentStore = create((set) => ({
       },
     })),
 
+  setCurrentIndex: (index) =>
+    set({
+      currentIndex: index,
+    }),
+
+  setResponses: (responses) =>
+    set({
+      responses,
+    }),
+
   nextQuestion: () =>
     set((state) => ({
       currentIndex: state.currentIndex + 1,

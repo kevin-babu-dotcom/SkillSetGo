@@ -30,7 +30,7 @@ export default function Home() {
 // Hero Section Component
 function HeroSection() {
   return (
-    <section className="max-w-7xl mx-auto px-4 py-12 lg:py-20 xl:py-24 font-outfit">
+    <section className="max-w-7xl mx-auto px-4 py-12 lg:py-20 xl:py-24">
       {/* Mobile Layout - Using Grid */}
       <div className="lg:hidden space-y-5">
         {/* Top section: Grid layout */}
@@ -75,7 +75,7 @@ function HeroSection() {
         
         {/* Bottom section: Description */}
         <div className="space-y-6">
-          <p className="text-lg text-gray-600 font-outfit">
+          <p className="text-lg text-gray-600">
             Take the SkillSetGo Test and find the stream, degree, or career that's the right fit—for you.
           </p>
         </div>
@@ -93,7 +93,7 @@ function HeroSection() {
             
           </h1>
                     
-          <p className="text-lg text-gray-600 max-w-lg font-outfit">
+          <p className="text-lg text-gray-600 max-w-lg">
             Take the SkillSetGo Test and find the stream, degree, or career that's the right fit—for you.
           </p>
           
@@ -124,7 +124,7 @@ function YellowBanner() {
         <h2 className="text-xl md:text-2xl font-bold text-black font-outfit">
           Transforming Futures with Purposeful Career Guidance
         </h2>
-        <p className="text-black mt-2 font-outfit">
+        <p className="text-black mt-2">
           Smart career support for students and schools — clear, simple, and effective
         </p>
       </div>
@@ -184,7 +184,7 @@ function FourCardsSection() {
             </h3>
             
             {/* Description */}
-            <p className="text-gray-600 text-base leading-relaxed font-outfit">
+            <p className="text-gray-600 text-base leading-relaxed">
               {card.description}
             </p>
           </div>
@@ -217,7 +217,7 @@ function FourCardsSection() {
             </h3>
             
             {/* Description */}
-            <p className="text-gray-600 text-lg leading-relaxed max-w-md mx-auto font-outfit">
+            <p className="text-gray-600 text-lg leading-relaxed max-w-md mx-auto">
               {card.description}
             </p>
           </div>

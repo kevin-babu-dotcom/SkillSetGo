@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { auth } from "@/firebase/auth";
+import { auth } from "@/firebase/config";
 import { completeUserProfile, getUserProfile } from "@/firebase/firestore";
 
 export default function ProfileComplete() {

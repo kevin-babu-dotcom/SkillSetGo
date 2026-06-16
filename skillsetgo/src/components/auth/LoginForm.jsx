@@ -7,7 +7,6 @@ import {
     loginWithEmailPassword,
     loginWithPhoneOtp,
     setupRecaptcha,
-    auth,
 } from "@/firebase/auth";
 import { getUserProfile } from "@/firebase/firestore";
 

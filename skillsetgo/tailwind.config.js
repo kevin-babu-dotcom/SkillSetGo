@@ -7,7 +7,10 @@ module.exports = {
   ],
   theme: {
     extend: {
-      
+      fontFamily: {
+        inter: ['var(--font-inter-sans)', 'system-ui', 'sans-serif'],
+        outfit: ['var(--font-outfit-mono)', 'system-ui', 'sans-serif'],
+      },
       colors: {
         'primary-orange': '#FF5722',
       }

@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server'
 import razorpay from '@/lib/razorpay'
 import { normalizeTier, getPriceForTier } from '@/lib/pricing'
 import { adminAuth } from '@/lib/firebaseAdmin'
-import { db } from '@/lib/firebaseAdmin'
+import { adminDb as db } from '@/lib/firebaseAdmin'
 
 /**
  * POST /api/create-order
